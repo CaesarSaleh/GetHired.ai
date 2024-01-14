@@ -38,7 +38,7 @@ export default function Dashboard() {
         if (text.trim() !== "") {
             console.log(text_var)
             console.log(question)
-            router.push("http://127.0.0.1:3000/analysis")
+            router.push("https://gethiredai.vercel.app/analysis")
             // fetch("http://127.0.0.1:4000/run_cohere_analysis",{
             //
             // })
