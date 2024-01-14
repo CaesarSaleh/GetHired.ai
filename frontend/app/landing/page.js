@@ -45,6 +45,29 @@ const Landing = () => {
           Finance
         </button>
       </div>
+      <div>
+      <div class="mb-16 mt-32">
+        <label for="message" class="block mb-2 text-4xl font-medium text-gray-900 dark:text-black">Job Description</label>
+      </div>
+      <div>
+        <textarea
+          id="message"
+          rows="4"
+          className="block p-2.5 max-w-[1000px] min-w-[1000px] text-sm text-white bg-gray-200 rounded-lg mx-auto"
+          placeholder="Paste the job description here"
+        ></textarea>
+      </div>
+      <div>
+    <button
+      type="button"
+      class="mt-8 bg-green-600 px-6 py-2 rounded-lg text-lg font-medium"
+    >
+      Get Started
+    </button>
+  </div>
+    </div>
+      
+
       <style jsx>{`
         button {
           transition: background-color 0.3s, border-radius 0.3s;
