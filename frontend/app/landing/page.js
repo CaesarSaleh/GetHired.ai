@@ -20,7 +20,7 @@ const Landing = () => {
     // Example: router.push('/next-page');
   };
   const handlePush = () => {
-      router.push("http://127.0.0.1:3000/dashboard");
+      router.push("https://gethiredai.vercel.app/dashboard");
   }
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
