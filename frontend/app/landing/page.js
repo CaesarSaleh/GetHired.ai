@@ -25,7 +25,7 @@ const Landing = () => {
       <div class="mb-8 mt-8">
         <label for="message" class="block mb-2 text-3xl font-medium text-gray-900 dark:text-black">Choose your industry</label>
       </div>
-      <div className="grid max-w-[1000px] grid-cols-3 gap-1 p-1 mx-auto my-2 bg-gray-200 rounded-lg dark:bg-#43934b" role="group">
+      <div className="grid max-w-[1000px] grid-cols-3 gap-1 p-1 mx-auto my-2 bg-gray-200 rounded-lg" role="group">
 
         <button
           type="button"
