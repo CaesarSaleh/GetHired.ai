@@ -35,7 +35,7 @@ const Login = () => {
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6" action="#" method="POST">
                 <div>
-                    <label className="block text-sm font-medium leading-6 text-757575 text-[#757575]">Email address</label>
+                    <label className="block text-sm font-medium leading-6 text-757575 text-[#757575]">Email Address</label>
                     <div className="mt-2">
                     <input id="email" onChange={(e) =>
               setData({
