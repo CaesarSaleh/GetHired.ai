@@ -31,6 +31,16 @@ def empty_tokens_table():
     conn.commit()
     conn.close()
 
+def empty_tokens_table2():
+    conn = sqlite3.connect('sentiment_data.db')
+    cursor = conn.cursor()
+
+    # Delete all rows from the tokens table
+    cursor.execute('DELETE FROM sentiment_data')
+
+    conn.commit()
+    conn.close()
+
 
 init_db()
 
@@ -113,8 +123,70 @@ def run_cohere_analysis():
     # Returning data
     return_data = {"sentiment": sentiment,
                    "confidence": confidence, "feedback": feedback}
+
+    conn = sqlite3.connect('sentiment_data')
+    cursor = conn.cursor()
+
+        # Create a table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS sentiment_data (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sentiment TEXT,
+            confidence REAL,
+            feedback TEXT
+        )
+    ''')
+
+        # Insert data into the table
+    cursor.execute('''
+        INSERT INTO sentiment_data (sentiment, confidence, feedback)
+        VALUES (?, ?, ?)
+    ''', (return_data["sentiment"], return_data["confidence"], return_data["feedback"]))
+
+        # Commit the changes and close the connection
+    conn.commit()
+    conn.close()
+
     empty_tokens_table()
-    return jsonify(return_data)
+
+ @app.route('/get_analysis', methods=['GET'])
+ from flask import jsonify
+
+ def get_last_data_from_sentiment_data():
+     database_path = 'sentiment_data.db'
+     conn = sqlite3.connect(database_path)
+     cursor = conn.cursor()
+
+     try:
+         # Select all rows from the 'sentiment_data' table ordered by id in descending order
+         cursor.execute('''
+             SELECT * FROM sentiment_data
+             ORDER BY id DESC
+             LIMIT 1
+         ''')
+
+         row = None
+         for row in cursor:
+             pass  # Iterate over the cursor to get the last row
+
+         if row is not None:
+             data_dict = {
+                 "id": row[0],
+                 "sentiment": row[1],
+                 "confidence": row[2],
+                 "feedback": row[3]
+             }
+             empty_tokens_table2()
+             return jsonify(data_dict)
+         else:
+             return jsonify({"message": "No data available"})
+
+     except sqlite3.Error as e:
+         print(f"SQLite error: {e}")
+         return jsonify({"error": "Internal Server Error"})
+
+     finally:
+         conn.close()
 
 
 if __name__ == '__main__':

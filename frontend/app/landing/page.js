@@ -19,11 +19,13 @@ const Landing = () => {
     // Add logic for handling the "Begin" button click, e.g., navigate to the next page.
     // Example: router.push('/next-page');
   };
-
+  const handlePush = () => {
+      router.push("http://127.0.0.1:3000/dashboard");
+  }
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <div class="mb-8 mt-8">
-        <label for="message" class="block mb-2 text-3xl font-medium text-gray-900 dark:text-black">Choose your industry</label>
+      <div className="mb-8 mt-8">
+        <label htmlFor="message" className="block mb-2 text-3xl font-medium text-gray-900 dark:text-black">Choose your industry</label>
       </div>
       <div className="grid max-w-[1000px] grid-cols-3 gap-1 p-1 mx-auto my-2 bg-gray-200 rounded-lg" role="group">
 
@@ -50,8 +52,8 @@ const Landing = () => {
         </button>
       </div>
       <div>
-      <div class="mb-8 mt-8">
-        <label for="message" class="block mb-2 text-3xl font-medium text-gray-900 dark:text-black">Job Description</label>
+      <div className="mb-8 mt-8">
+        <label htmlFor="message" className="block mb-2 text-3xl font-medium text-gray-900 dark:text-black">Job Description</label>
       </div>
       <div>
         <textarea
@@ -64,7 +66,8 @@ const Landing = () => {
       <div>
     <button
       type="button"
-      class="mt-8 bg-green-600 px-6 py-2 rounded-lg text-lg font-medium"
+      className="mt-8 bg-green-600 px-6 py-2 rounded-lg text-lg font-medium"
+      onClick={handlePush}
     >
       Get Started
     </button>

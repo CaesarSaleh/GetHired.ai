@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 export default function CurrentPairView({params}) {
     const [utterance, setUtterance] = useState(typeof window !== 'undefined' && 'speechSynthesis' in window ? new window.SpeechSynthesisUtterance() : null);
 
-    const [analysisData, setAnalysisData] = useState({'confidence': 0.90, 'grammar': 0.70, 'clarity': 0.50, 'passion': 0.80, 'vocabulary': 0.80});
-    const [textAnalysis, setTextAnalysis] = useState("Your interview skill is shit. Complete shit. Like don't even talk to me. You got no hope. People like you are hopeless to get employed. Like just give up.");
-    const [recommendation, setRecommendation] = useState(null);
+    const [analysisData, setAnalysisData] = useState({'confidence': 0.50, 'grammar': 0.70, 'clarity': 0.50, 'passion': 0.80, 'vocabulary': 0.80});
+    const [textAnalysis, setTextAnalysis] = useState("Pros:  - You demonstrated relevant skills in Python, Java, and SQL through your experience in developing a threat detection system using machine learning algorithms. - Your ability to lead technical initiatives is evident in your role in leading the development of the project. - You managed to overcome challenges relating to refining the model and integrating it into existing systems, which is a valuable demonstration of your problem-solving skills. - Your project resulted in a high level of accuracy, highlighting your technical expertise and effective collaboration with your team.  Cons:  - While you mentioned the importance of refining the model to reduce false positives, you could have elaborated on the steps you took to improve the model's accuracy.");
+    const [recommendation, setRecommendation] = useState("Advice: When answering questions about your projects, it's important to provide clear details about the challenges you faced and how you overcame them. Additionally, focusing on the results and outcomes of your work can help highlight your contributions and the impact of your efforts. Remember to speak confidently and clearly throughout your answer to help convey your skills and experiences effectively.   ");
     const router = useRouter();
     const apiUrl = '';
     const criteria = {
@@ -42,9 +42,9 @@ export default function CurrentPairView({params}) {
 
 
     useEffect(() => {
-      utterance.text = textAnalysis;
+      utterance.text = textAnalysis+recommendation;
       speechSynthesis.speak(utterance);
-    }, [textAnalysis]);
+    }, [textAnalysis,recommendation]);
 
     return (
         <>
