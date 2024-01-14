@@ -59,7 +59,7 @@ export default function CurrentPairView({params}) {
                                         <button
                                             className="flex gap-2"
                                             onClick={() => {
-                                                router.push("http://localhost:3000/database");
+                                                router.push("/dashboard");
                                             }}
                                         >
                                             <div className="text-white">
