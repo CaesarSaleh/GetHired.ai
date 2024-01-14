@@ -76,7 +76,6 @@ def add_to_sql():
         conn.close()
 
 
-@app.route('/get_from_sql', methods=['GET'])
 def get_from_sql():
     # Use a context manager to ensure proper resource management
     with sqlite3.connect('tokens.db') as conn:
@@ -87,9 +86,9 @@ def get_from_sql():
         token = cursor.fetchone()
 
     if token:
-        return jsonify({'tokenId': token[1]})
+        return token[1]
     else:
-        return jsonify({'message': 'No tokens available'})
+        return "No description available"
 
 
 @app.route('/run_cohere_analysis', methods=['POST'])
@@ -104,7 +103,7 @@ def run_cohere_analysis():
         return jsonify({'error': 'Missing parameters!'}), 400
 
     # Getting job description from database
-    job_description = "TODO!"
+    job_description = get_from_sql()
 
     # Running cohere analysis
     tool = CohereTool(audio_transcript, job_description, question)
@@ -114,6 +113,7 @@ def run_cohere_analysis():
     # Returning data
     return_data = {"sentiment": sentiment,
                    "confidence": confidence, "feedback": feedback}
+    empty_tokens_table()
     return jsonify(return_data)
 
 
