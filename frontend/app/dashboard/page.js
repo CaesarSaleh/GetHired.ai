@@ -1,9 +1,19 @@
 'use client'
-import { useRouter } from 'next/navigation'
-import React, {useEffect, useState} from 'react'
+import { useRouter } from 'next/navigation';
+import React, {useEffect, useState} from 'react';
 import Webcam from "react-webcam";
-
+import useSpeechRecognition from './speech'
+let text_var = "";
 export default function Dashboard() {
+    const router = useRouter();
+    const {
+        text,
+        isListening,
+        startListening,
+        stopListening,
+        resetText,
+        hasRecognitionSupport
+    }= useSpeechRecognition();
     const WebcamComponent = () => <Webcam/>;
     let iconTitles = [
         "Tell us about yourself.",
@@ -18,6 +28,26 @@ export default function Dashboard() {
         "M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"
     ];
     const [question, setQuestion] = useState("Tell us about yourself.");
+
+    const handleRecord = () => {
+        startListening();
+    }
+
+    useEffect(  () => {
+        text_var = text;
+        if (text.trim() !== "") {
+            console.log(text_var)
+            console.log(question)
+            router.push("http://127.0.0.1:3000/analysis")
+            // fetch("http://127.0.0.1:4000/run_cohere_analysis",{
+            //
+            // })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //     })
+
+        }
+    },[text]);
     return (
         <>
             <aside id="default-sidebar"
@@ -92,8 +122,8 @@ export default function Dashboard() {
             </div>
             <div className="w-full flex justify-center">
                 <div className="w-[15px]">
-                    <button type="button" className="bg-[url('/record.svg')] ">
-
+                    <button type="button" className="rounded-full" onClick={handleRecord}>
+                        Record
                     </button>
                 </div>
             </div>
