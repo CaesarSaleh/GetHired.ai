@@ -1,9 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import React, {useEffect, useState} from 'react'
-import Sidebar from './Sidebar'
-import NavIcon from './NavIcon'
-// import { useAuth } from './context/AuthContext'
 import Webcam from "react-webcam";
 
 export default function Dashboard() {
