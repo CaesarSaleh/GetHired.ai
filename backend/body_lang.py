@@ -29,7 +29,7 @@ EDGES = {
 emotion_detector = FER(mtcnn=True)
 
 
-async def analyze(arr):
+def analyze(arr):
     analysis = emotion_detector.detect_emotions(arr)[0]['emotions']
     print(analysis)
     # await asyncio.sleep(2)  # Simulate an asynchronous operation (sleep for 2 seconds)
@@ -97,6 +97,9 @@ async def body_lang():
     cap.release()
     cv2.destroyAllWindows()
     print(body_lang_score)
+    final_result = emotion_count
+    final_result['body_lang'] = body_lang_score
+    return final_result
 
 def draw_keypoints(frame, keypoints, confidence_threshold) -> int:
     y, x, c = frame.shape
