@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, request
-
+from flask import Flask, jsonify, request, render_template
+from Classification import CohereTool
 
 app = Flask(__name__)
 
@@ -13,7 +13,8 @@ def add_cors_headers(response):
 
 @app.route('/')
 def index():
-    return 'hello'
+    #return 'hello'
+    return render_template('index.html')
 
 
 @app.route('/run_cohere_analysis', methods=['POST'])
@@ -21,12 +22,14 @@ def run_cohere_analysis():
     # Getting params from json
     new_token = request.json
     audio_transcript = new_token.get('audio_transcript')
-    job_description = new_token.get('job_description')
     question = new_token.get('question')
 
     # Checking params
-    if not (audio_transcript and job_description and question):
+    if not (audio_transcript and question):
         return jsonify({'error': 'Missing parameters!'}), 400
+
+    # Getting job description from database
+    job_description = "TODO!"
 
     # Running cohere analysis
     tool = CohereTool(audio_transcript, job_description, question)

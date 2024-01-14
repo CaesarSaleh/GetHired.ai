@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html>
 
-  <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8  offset-lg-2">
-                <h3 class="mt-5">Live Streaming</h3>
-                <img src="{{ url_for('video_feed') }}" width="100%">
-            </div>
-        </div>
-    </div>
-    </body>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-top: 5%; /* Adjust the margin-top as needed */
+        }
+
+        img {
+            width: 50vmin; /* 50% of the viewport's smaller dimension (width or height) */
+            height: 50vmin; /* 50% of the viewport's smaller dimension (width or height) */
+            /* Add other styles for your image as needed */
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <h1 class="mt-5">Live Streaming</h1>
+    <img src="your_image_source"/>
+</div>
+</body>
 
 </html>
