@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 from matplotlib import pyplot as plt
 import cv2
+import asyncio
+from fer import FER
 
 EDGES = {
     (0, 1): 'm',
@@ -24,22 +26,49 @@ EDGES = {
     (14, 16): 'c'
 }
 
+emotion_detector = FER(mtcnn=True)
+
+
+async def analyze(arr):
+    analysis = emotion_detector.detect_emotions(arr)[0]['emotions']
+    print(analysis)
+    # await asyncio.sleep(2)  # Simulate an asynchronous operation (sleep for 2 seconds)
+
+    # return int(analysis * 100)
+    return analysis
+
 WRIST_INDICES = [10, 11]
 
-def body_lang():
+async def body_lang():
     interpreter = tf.lite.Interpreter(model_path="3.tflite")
     interpreter.allocate_tensors()
 
     cap = cv2.VideoCapture(0)
 
     body_lang_score = 0
-    hands_in_frame = 0
+
+    emotion_count = {'happy': 0, 'sad': 0, 'disgusted': 0, 'surprise': 0, 'fear': 0, 'neutral': 0, 'angry': 0}
+
+    count = 0
     while cap.isOpened():
         ret, frame = cap.read()
 
         # Reshape image
         img = frame.copy()
+
+        # analyze emotion detection
+        if img is not None and count > 50:
+            result = await analyze(img)
+            dominant_emotion = max(result, key=lambda x: result[x])
+            emotion_count[dominant_emotion] += 1
+
+
+
         img = tf.image.resize_with_pad(np.expand_dims(img, axis=0), 192, 192)
+
+
+
+        
         input_image = tf.cast(img, dtype=tf.float32)
 
         # Get input and output tensors
@@ -61,7 +90,9 @@ def body_lang():
         cv2.imshow('Body Lang', frame)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
+            print(emotion_count)
             break
+        count += 1
 
     cap.release()
     cv2.destroyAllWindows()
@@ -91,4 +122,4 @@ def draw_connections(frame, keypoints, edges, confidence_threshold):
             cv2.line(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0,0,255), 4)
 
 if __name__ == "__main__":
-    body_lang()
+    asyncio.run(body_lang())
