@@ -19,3 +19,4 @@ def index():
 if __name__ == '__main__':
     app.after_request(add_cors_headers)
     app.run(port=4000, debug=True)
+
